@@ -1,28 +1,58 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="small">
+    <line-chart :chart-data="datacollection" id="mychart"></line-chart>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LineChart from "../LineChart.js";
+import io from "socket.io-client";
+
+var socket = io("wss://le-18262636.bitzonte.com", { path: "/stocks" });
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    LineChart
+  },
+  data() {
+    return {
+      datacollection: null
+    };
+  },
+  created() {
+    this.getRealtimeData();
+  },
+  methods: {
+    fillData(data) {
+      this.datacollection = {
+        labels: [data, data],
+        datasets: [
+          {
+            label: "Google Stock",
+            backgroundColor: "#1A73E8",
+            data: [data.value, data.value]
+          },
+          {
+            label: "Microsoft Stock",
+            backgroundColor: "#2b7518",
+            data: [data.value + 1, data.value + 1]
+          }
+        ]
+      };
+    },
+    getRealtimeData() {
+      socket.on("UPDATE", data => {
+        console.log("Update:\t", data);
+        this.fillData(data);
+      });
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.small {
+  max-width: 600px;
+  margin: 150px auto;
 }
 </style>
