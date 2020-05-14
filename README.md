@@ -1,4 +1,4 @@
-# tarea3
+# Tarea3
 
 ## Project setup
 ```
