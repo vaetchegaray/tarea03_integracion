@@ -1,7 +1,11 @@
 <template>
   <div class="small">
     <button @click="toggleConnnection()">{{ button.state }}</button>
-    <line-chart :chart-data="datacollection" id="mychart"></line-chart>
+    <line-chart
+      :chartData="datacollection"
+      :options="options"
+      id="grafico"
+    ></line-chart>
   </div>
 </template>
 
@@ -17,20 +21,24 @@ export default {
   components: {
     LineChart,
   },
-  props: {},
   data() {
     return {
-      datacollection: {
-        datasets: [],
-        labels: [],
-      },
+      datacollection: { datasets: [], labels: [] },
       button: {
-        state: true,
+        state: null,
+      },
+      loaded: false,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
       },
     };
   },
-  mounted() {
+  created() {
+    this.getRealtimeData();
     this.button.state = true;
+  },
+  async mounted() {
     this.getRealtimeData();
   },
   methods: {
@@ -79,16 +87,16 @@ export default {
 
       if (new_stock && dataset_stock) {
         if (!labels.includes(dataset_stock.time)) {
-          labels.push(dataset_stock.time);
+          this.datacollection.labels = labels.concat(dataset_stock.time);
         }
-        datasets.push({
+        this.datacollection.datasets = datasets.concat({
           backgroundColor: dataset_stock.color,
           label: label,
           data: [dataset_stock.value],
         });
       } else if (dataset_stock) {
         if (!labels.includes(dataset_stock.time)) {
-          labels.push(dataset_stock.time);
+          this.datacollection.labels = labels.concat(dataset_stock.time);
         }
         const to_push = datasets.find((stock) => stock.label === label);
         to_push.data.push(dataset_stock.value);
