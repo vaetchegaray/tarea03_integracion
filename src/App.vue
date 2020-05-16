@@ -1,15 +1,15 @@
 <template>
   <div class="small">
-    <Home id="home"></Home>
+    <Exchange id="exchange"></Exchange>
   </div>
 </template>
 
 <script>
-import Home from "./components/Home.vue";
+import Exchange from "./components/Exchange.vue";
 
 export default {
   components: {
-    Home
+    Exchange
   }
 };
 </script>
