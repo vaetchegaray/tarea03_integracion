@@ -1,22 +1,22 @@
 <template>
   <div class="small">
-    <Graphic :chart-data="datacollection" id="graph"></Graphic>
+    <Home id="home"></Home>
   </div>
 </template>
 
 <script>
-import Graphic from "./components/Graphic.vue";
+import Home from "./components/Home.vue";
 
 export default {
   components: {
-    Graphic,
-  },
+    Home
+  }
 };
 </script>
 
 <style>
 .small {
   max-width: 600px;
-  margin: 150px auto;
+  margin: 50px auto;
 }
 </style>
