@@ -4,6 +4,7 @@
       <div class="row">
         <h2 class="title">Taller de integración WebSocket app</h2>
         <h3 class="subtitle">Tarea 3</h3>
+        <button @click="toggleConnection()" id="toggle-button">{{this.state}}</button>
         <LineChart :chart-data="datacollection"></LineChart>
       </div>
     </div>
@@ -24,12 +25,14 @@ export default {
   components: { LineChart },
   data() {
     return {
-      datacollection: null
+      datacollection: null,
+      state: false
     };
   },
   created() {
     this.fetchData();
     this.fillData();
+    this.state = true;
   },
   mounted() {
     this.fillData();
@@ -54,7 +57,6 @@ export default {
           fill: false
         })
       );
-      console.log(datasets);
       this.datacollection = {
         labels: dateValues,
         datasets: datasets
@@ -77,6 +79,14 @@ export default {
         }
         this.fillData();
       });
+    },
+    toggleConnection() {
+      if (this.state) {
+        socket.off();
+      } else {
+        this.fetchData();
+      }
+      this.state = !this.state;
     }
   }
 };
@@ -91,31 +101,10 @@ export default {
 .subtitle {
   text-align: center;
 }
-.form {
-  max-width: 600px;
-  width: 100%;
-  margin: 20px auto 0 auto;
-}
-.form h4 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
 h1,
 h2 {
   font-weight: normal;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
 a {
   color: #42b983;
 }
