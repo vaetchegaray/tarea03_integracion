@@ -49,7 +49,7 @@ export default {
         datasets.push({
           label: stock,
           backgroundColor: stockValues[stock].color,
-          borderdColor: stockValues[stock].color,
+          borderColor: stockValues[stock].color,
           data: stockValues[stock].values,
           fill: false
         })
