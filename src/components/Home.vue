@@ -93,7 +93,7 @@ export default {
 </script>
 
 
-    <style scoped>
+<style scoped>
 .title {
   text-align: center;
   margin-top: 40px;

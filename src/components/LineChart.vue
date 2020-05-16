@@ -12,6 +12,10 @@ export default {
               ticks: {
                 beginAtZero: true
               },
+              scaleLabel: {
+                display: true,
+                labelString: "Valor($USD)"
+              },
               gridLines: {
                 display: true
               }
@@ -19,6 +23,10 @@ export default {
           ],
           xAxes: [
             {
+              scaleLabel: {
+                display: true,
+                labelString: "Fecha Hora"
+              },
               gridLines: {
                 display: false
               }
